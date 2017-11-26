@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <sstream>
 #include <zlib.h>
+#include <stdio.h>
 
 #include "fingerprint.h"
 
@@ -154,6 +155,8 @@ NAN_METHOD(supportsPrintData) {
     struct fp_print_data *fpdata;
     unsigned char *tmp;
     unsigned long length;
+
+    printf("===================");
 
     if(info.Length() != 1)
         return;
