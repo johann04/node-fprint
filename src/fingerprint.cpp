@@ -179,16 +179,23 @@ NAN_METHOD(supportsPrintData) {
     tmp = fromString(s, &length);
     fprintf(fp, "++++++++++++++++++ 3 \n");
     fpdata = fp_print_data_from_data(tmp, length);
-    fprintf(fp, "driverId %d \n", driverId);
-    fprintf(fp, "fpdata = driver_id: %d, devtype: %d, length: %d \n", fpdata->driver_id, fpdata->devtype, fpdata->length);
     free(tmp);
-    fprintf(fp, "++++++++++++++++++ 5 \n");
-    fflush(fp);
-    fprintf(fp, "fp_dev_supports_print_data: %d \n", fp_dev_supports_print_data(dev, fpdata));
-    fflush(fp);
-    info.GetReturnValue().Set(fp_dev_supports_print_data(dev, fpdata));
-    fprintf(fp, "++++++++++++++++++ 6 \n");
-    fflush(fp);
+    if (fpdata != NULL ) {
+        // fprintf(fp, "driverId %d \n", driverId);
+        // fprintf(fp, "fpdata = driver_id: %d, devtype: %d, length: %d \n", fpdata->driver_id, fpdata->devtype, fpdata->length);
+        fprintf(fp, "++++++++++++++++++ 5 \n");
+        fflush(fp);
+        fprintf(fp, "fp_dev_supports_print_data: %d \n", fp_dev_supports_print_data(dev, fpdata));
+        fflush(fp);
+        info.GetReturnValue().Set(fp_dev_supports_print_data(dev, fpdata));
+        fprintf(fp, "++++++++++++++++++ 6 \n");
+        fflush(fp);
+        fclose(fp);
+    } else {
+        fprintf(fp, "++++++++++++++++++ ERROR \n");
+        fflush(fp);
+        info.GetReturnValue().Set(0);
+    }
     fclose(fp);
 }
 
