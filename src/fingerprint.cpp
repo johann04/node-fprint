@@ -153,7 +153,7 @@ NAN_METHOD(getEnrollStages) {
 NAN_METHOD(supportsPrintData) {
     FILE * fp;
     fp = fopen ("log.txt", "a");
-    fprintf(fp, "++++++++++++++++++ ",);
+    fprintf(fp, "++++++++++++++++++ ");
 
     struct fp_dev *dev;
     std::string s;
