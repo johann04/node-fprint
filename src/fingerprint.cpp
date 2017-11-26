@@ -158,13 +158,19 @@ NAN_METHOD(supportsPrintData) {
     struct fp_dev *dev;
     std::string s;
     struct fp_print_data *fpdata;
+    struct fp_driver *fpdriver;
     unsigned char *tmp;
     unsigned long length;
+    uint16_t driverId;
 
     if(info.Length() != 2)
         return;
 
     dev = toFPDev(Nan::To<v8::Number>(info[0]).ToLocalChecked()->Value());
+
+    fpdriver = fp_dev_get_driver(dev);
+    driverId = fp_driver_get_driver_id(fpdriver);
+
     if(initalized != 0 || dev == NULL)
         return;
     fprintf(fp, "++++++++++++++++++ 1 \n");
@@ -173,7 +179,8 @@ NAN_METHOD(supportsPrintData) {
     tmp = fromString(s, &length);
     fprintf(fp, "++++++++++++++++++ 3 \n");
     fpdata = fp_print_data_from_data(tmp, length);
-    fprintf(fp, "fp_print_data = driver_id: %d, devtype: %d, length: %d \n");
+    fprintf(fp, "driverId %d \n", driverId);
+    fprintf(fp, "fp_print_data = driver_id: %d, devtype: %d, length: %d \n", fp_print_data.driver_id, fp_print_data.devtype, fp_print_data.length);
     free(tmp);
     fprintf(fp, "++++++++++++++++++ 5 \n");
     fflush(fp);
