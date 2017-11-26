@@ -176,8 +176,12 @@ NAN_METHOD(supportsPrintData) {
     fprintf(fp, "++++++++++++++++++ 4 \n");
     free(tmp);
     fprintf(fp, "++++++++++++++++++ 5 \n");
+    fflush(fp);
+    fprintf(fp, "fp_dev_supports_print_data: %d", fp_dev_supports_print_data(dev, fpdata));
+    fflush(fp);
     info.GetReturnValue().Set(fp_dev_supports_print_data(dev, fpdata));
     fprintf(fp, "++++++++++++++++++ 6 \n");
+    fflush(fp);
     fclose(fp);
 }
 
