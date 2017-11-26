@@ -161,7 +161,7 @@ NAN_METHOD(supportsPrintData) {
     unsigned char *tmp;
     unsigned long length;
 
-    if(info.Length() != 1)
+    if(info.Length() != 2)
         return;
 
     dev = toFPDev(Nan::To<v8::Number>(info[0]).ToLocalChecked()->Value());
