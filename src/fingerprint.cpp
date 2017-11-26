@@ -152,6 +152,8 @@ NAN_METHOD(supportsPrintData) {
     struct fp_dev *dev;
     std::string s;
     struct fp_print_data *fpdata;
+    unsigned char *tmp;
+    unsigned long length;
 
     if(info.Length() != 1)
         return;
