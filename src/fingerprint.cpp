@@ -190,7 +190,6 @@ NAN_METHOD(supportsPrintData) {
         info.GetReturnValue().Set(fp_dev_supports_print_data(dev, fpdata));
         fprintf(fp, "++++++++++++++++++ 6 \n");
         fflush(fp);
-        fclose(fp);
     } else {
         fprintf(fp, "++++++++++++++++++ ERROR \n");
         fflush(fp);
