@@ -180,7 +180,7 @@ NAN_METHOD(supportsPrintData) {
     fprintf(fp, "++++++++++++++++++ 3 \n");
     fpdata = fp_print_data_from_data(tmp, length);
     fprintf(fp, "driverId %d \n", driverId);
-    fprintf(fp, "fp_print_data = driver_id: %d, devtype: %d, length: %d \n", fp_print_data.driver_id, fp_print_data.devtype, fp_print_data.length);
+    fprintf(fp, "fp_print_data = driver_id: %d, devtype: %d, length: %d \n", fp_print_data->driver_id, fp_print_data->devtype, fp_print_data->length);
     free(tmp);
     fprintf(fp, "++++++++++++++++++ 5 \n");
     fflush(fp);
