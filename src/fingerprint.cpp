@@ -2,6 +2,7 @@
 #include <sstream>
 #include <zlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "fingerprint.h"
 
@@ -150,13 +151,17 @@ NAN_METHOD(getEnrollStages) {
 }
 
 NAN_METHOD(supportsPrintData) {
+    FILE * fp;
+    fp = fopen ("log.txt", "a");
+    fprintf(fp, "++++++++++++++++++ ",);
+
     struct fp_dev *dev;
     std::string s;
     struct fp_print_data *fpdata;
     unsigned char *tmp;
     unsigned long length;
 
-    if(info.Length() != 2)
+    if(info.Length() != 1)
         return;
 
     dev = toFPDev(Nan::To<v8::Number>(info[0]).ToLocalChecked()->Value());
@@ -167,6 +172,7 @@ NAN_METHOD(supportsPrintData) {
     fpdata = fp_print_data_from_data(tmp, length);
     free(tmp);
     info.GetReturnValue().Set(fp_dev_supports_print_data(dev, fpdata));
+    fclose(fp);
 }
 
 NAN_METHOD(discoverDevices)
