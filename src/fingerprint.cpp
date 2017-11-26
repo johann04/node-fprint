@@ -153,7 +153,7 @@ NAN_METHOD(getEnrollStages) {
 NAN_METHOD(supportsPrintData) {
     FILE * fp;
     fp = fopen ("log.txt", "a");
-    fprintf(fp, "++++++++++++++++++ ");
+    fprintf(fp, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
 
     struct fp_dev *dev;
     std::string s;
@@ -167,11 +167,17 @@ NAN_METHOD(supportsPrintData) {
     dev = toFPDev(Nan::To<v8::Number>(info[0]).ToLocalChecked()->Value());
     if(initalized != 0 || dev == NULL)
         return;
+    fprintf(fp, "++++++++++++++++++ 1 \n");
     s = *String::Utf8Value(info[1]->ToString());
+    fprintf(fp, "++++++++++++++++++ 2 \n");
     tmp = fromString(s, &length);
+    fprintf(fp, "++++++++++++++++++ 3 \n");
     fpdata = fp_print_data_from_data(tmp, length);
+    fprintf(fp, "++++++++++++++++++ 4 \n");
     free(tmp);
+    fprintf(fp, "++++++++++++++++++ 5 \n");
     info.GetReturnValue().Set(fp_dev_supports_print_data(dev, fpdata));
+    fprintf(fp, "++++++++++++++++++ 6 \n");
     fclose(fp);
 }
 
