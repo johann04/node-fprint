@@ -151,9 +151,9 @@ NAN_METHOD(getEnrollStages) {
 }
 
 NAN_METHOD(supportsPrintData) {
-    FILE * fp;
-    fp = fopen ("log.txt", "a");
-    fprintf(fp, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
+    // FILE * fp;
+    // fp = fopen ("log.txt", "a");
+    // fprintf(fp, "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ \n");
 
     struct fp_dev *dev;
     std::string s;
@@ -161,41 +161,27 @@ NAN_METHOD(supportsPrintData) {
     struct fp_driver *fpdriver;
     unsigned char *tmp;
     unsigned long length;
-    uint16_t driverId;
 
     if(info.Length() != 2)
         return;
 
     dev = toFPDev(Nan::To<v8::Number>(info[0]).ToLocalChecked()->Value());
 
-    fpdriver = fp_dev_get_driver(dev);
-    driverId = fp_driver_get_driver_id(fpdriver);
-
     if(initalized != 0 || dev == NULL)
         return;
-    fprintf(fp, "++++++++++++++++++ 1 \n");
+
     s = *String::Utf8Value(info[1]->ToString());
-    fprintf(fp, "++++++++++++++++++ 2 \n");
+
     tmp = fromString(s, &length);
-    fprintf(fp, "++++++++++++++++++ 3 \n");
+
     fpdata = fp_print_data_from_data(tmp, length);
     free(tmp);
     if (fpdata != NULL ) {
-        // fprintf(fp, "driverId %d \n", driverId);
-        // fprintf(fp, "fpdata = driver_id: %d, devtype: %d, length: %d \n", fpdata->driver_id, fpdata->devtype, fpdata->length);
-        fprintf(fp, "++++++++++++++++++ 5 \n");
-        fflush(fp);
-        fprintf(fp, "fp_dev_supports_print_data: %d \n", fp_dev_supports_print_data(dev, fpdata));
-        fflush(fp);
         info.GetReturnValue().Set(fp_dev_supports_print_data(dev, fpdata));
-        fprintf(fp, "++++++++++++++++++ 6 \n");
-        fflush(fp);
     } else {
-        fprintf(fp, "++++++++++++++++++ ERROR \n");
-        fflush(fp);
+        // an error ocurred getting fp_print_data_from_data => return 0
         info.GetReturnValue().Set(0);
     }
-    fclose(fp);
 }
 
 NAN_METHOD(discoverDevices)
