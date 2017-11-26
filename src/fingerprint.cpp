@@ -173,11 +173,11 @@ NAN_METHOD(supportsPrintData) {
     tmp = fromString(s, &length);
     fprintf(fp, "++++++++++++++++++ 3 \n");
     fpdata = fp_print_data_from_data(tmp, length);
-    fprintf(fp, "++++++++++++++++++ 4 \n");
+    fprintf(fp, "fp_print_data = driver_id: %d, devtype: %d, length: %d \n");
     free(tmp);
     fprintf(fp, "++++++++++++++++++ 5 \n");
     fflush(fp);
-    fprintf(fp, "fp_dev_supports_print_data: %d", fp_dev_supports_print_data(dev, fpdata));
+    fprintf(fp, "fp_dev_supports_print_data: %d \n", fp_dev_supports_print_data(dev, fpdata));
     fflush(fp);
     info.GetReturnValue().Set(fp_dev_supports_print_data(dev, fpdata));
     fprintf(fp, "++++++++++++++++++ 6 \n");
