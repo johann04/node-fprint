@@ -148,6 +148,24 @@ NAN_METHOD(getEnrollStages) {
     info.GetReturnValue().Set(fp_dev_get_nr_enroll_stages(dev));
 }
 
+NAN_METHOD(supportsPrintData) {
+    struct fp_dev *dev;
+    std::string s;
+    struct fp_print_data *fpdata;
+
+    if(info.Length() != 1)
+        return;
+
+    dev = toFPDev(Nan::To<v8::Number>(info[0]).ToLocalChecked()->Value());
+    if(initalized != 0 || dev == NULL)
+        return;
+    s = *String::Utf8Value(info[1]->ToString());
+    tmp = fromString(s, &length);
+    fpdata = fp_print_data_from_data(tmp, length);
+    free(tmp);
+    info.GetReturnValue().Set(fp_dev_supports_print_data(dev, fpdata));
+}
+
 NAN_METHOD(discoverDevices)
 {
     struct fp_dscv_dev **discovered_devs;
@@ -258,6 +276,7 @@ NAN_MODULE_INIT(module_init) {
     NAN_EXPORT(target, openDevice);
     NAN_EXPORT(target, closeDevice);
     NAN_EXPORT(target, getEnrollStages);
+    NAN_EXPORT(target, supportsPrintData);
     NAN_EXPORT(target, enrollStart);
     NAN_EXPORT(target, enrollStop);
 	NAN_EXPORT(target, verifyStart);
